@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List App</title>
+    <style>
+        /* Basic styling for demonstration purposes */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #tasks {
+            list-style-type: none;
+            padding: 0;
+        }
+        .task-item {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .task-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        #taskInput
+          {
+             padding : 5px;
+             background-color : violet;
+          }
+         #Submit
+          {
+             padding : 5px;
+             width : 100px;
+             background-color : lightblue
+          }
+    </style>
+</head>
+<body>
+
+<h1>To-Do List</h1>
+
+<form id="taskForm">
+    <input type="text" id="taskInput" placeholder="Enter task...">
+    <button type="submit" id="Submit">Add</button>
+</form>
+
+<ul id="tasks"></ul>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const taskForm = document.getElementById('taskForm');
+        const taskInput = document.getElementById('taskInput');
+        const tasksList = document.getElementById('tasks');
+
+        taskForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            if (taskInput.value.trim() !== '') {
+                const newTask = document.createElement('li');
+                newTask.className = 'task-item';
+                newTask.innerHTML = `
+                    <input type="checkbox">
+                    <span>${taskInput.value}</span>
+                `;
+                tasksList.appendChild(newTask);
+                taskInput.value = '';
+            }
+        });
+
+        tasksList.addEventListener('change', function(event) {
+            if (event.target.tagName === 'INPUT' && event.target.type === 'checkbox') {
+                const task = event.target.nextElementSibling;
+                if (event.target.checked) {
+                    task.style.textDecoration = 'line-through';
+                } else {
+                    task.style.textDecoration = 'none';
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
